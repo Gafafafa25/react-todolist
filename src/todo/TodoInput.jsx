@@ -7,11 +7,12 @@ const TodoInput = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addTask(value)
+        setValue("")
     }
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <input type="text" placeholder="task" value={value} onChange={(e) => {setValue(e.target.value)}}/>
-            <button type="submit" onSubmit={handleSubmit}>
+            <button type="submit">
                 Add task
             </button>
         </form>
