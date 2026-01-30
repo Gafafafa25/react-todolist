@@ -11,7 +11,7 @@ const TodoInput = () => {
     }
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="task" value={value} onChange={(e) => {setValue(e.target.value)}}/>
+            <input type="text" placeholder="task" value={value} onChange={(e) => {setValue(e.target.value)}} required/>
             <button type="submit">
                 Add task
             </button>
