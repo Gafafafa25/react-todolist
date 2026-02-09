@@ -36,7 +36,7 @@ function App() {
         <>
             <TodoContext.Provider value={{tasks, addTask, toggleTask}}>
                 <div>
-                    <h1>To Do List</h1>
+                    <h1 className="text-green-500">To Do List</h1>
                     <TodoInput/>
                     <TodoList/>
                 </div>
