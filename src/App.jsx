@@ -15,11 +15,24 @@ function App() {
         return []
     })
 
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks))
+    }, [tasks])
+
     const toggleTask = (id) => {
-        //todo:
+        const updatedTasks = []
+        for (const task of tasks) {
+            if (task.id === id) {
+                updatedTasks.push({...task, done: !task.done})
+            } else {
+                updatedTasks.push(task)
+            }
+        }
+        setTasks(updatedTasks)
     }
 
     const addTask = (text) => {
+        console.log(tasks, " before")
         const newTask = {
             id: Date.now(),
             text: text,
@@ -28,9 +41,6 @@ function App() {
         setTasks([...tasks, newTask])
     }
 
-    useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks))
-    }, [tasks])
 
     return (
         <>
