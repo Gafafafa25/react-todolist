@@ -1,6 +1,6 @@
 import path from 'path';
 import {fileURLToPath} from 'url';
-import db from './db';
+import db from './db.js';
 import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
