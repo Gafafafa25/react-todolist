@@ -10,13 +10,15 @@ export function initDb() {
     return new Promise((resolve, reject) => {
         const files = fs.readdirSync(migrations).sort();
         console.log(files);
-        db.serialize((err, data) => {
+        db.serialize(() => {
             for (const file of files) {
                 const filePath = path.join(migrations, file);
                 const sql = fs.readFileSync(filePath, 'utf8');
                 db.run(sql, (err) => {
                     if (err) {
-                        console.error("Error sqlite3: ", err.message);
+                        console.error('Error sqlite3: ', err.message);
+                        reject(err);
+                        return
                     }
                 })
             }
