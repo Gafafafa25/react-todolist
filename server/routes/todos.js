@@ -23,7 +23,7 @@ router.get('/todos', (req, res) => {
 
 router.post('/add', (req, res) => {
     const {id, text} = req.body;
-    db.run('INSERT INT0 todolist (id, text) VALUES (?, ?)', [String(id), text], err => {
+    db.run('INSERT INTO todolist (id, text) VALUES (?, ?)', [String(id), text], err => {
         if (err) {
             console.log(err.message);
             return res.status(500).json({
