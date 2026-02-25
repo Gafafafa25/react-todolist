@@ -19,6 +19,6 @@ export async function initDb() {
         console.log("Migrations finished")
     }
     catch (err) {
-        console.error("Error sqlite3: ", err.message);
+        console.error("Error psql: ", err.message);
     }
 }
