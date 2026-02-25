@@ -4,9 +4,9 @@ const {Pool} = pkg;
 
 const pool = new Pool({
     host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER , //todo
-    password: process.env.DB_PASSWORD, //todo
-    database: process.env.DB_NAME //todo
+    user: process.env.DB_USER || 'myuser',
+    password: process.env.DB_PASSWORD || 'mypassword',
+    database: process.env.DB_NAME || 'reactTodolist'
 });
 
 pool.on("connect", () => console.log("Successfully connected to db"));
