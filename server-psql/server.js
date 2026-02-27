@@ -1,6 +1,6 @@
 import express from 'express';
 import {initDb} from "./db/init.js";
-// import todosRouter from "./routes/todos.js"
+import todosRouter from "./routes/todos.js"
 import "dotenv/config";
 import pool from "./db/db.js";
 
@@ -13,7 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.use('/api', todosRouter)
+app.use('/api', todosRouter)
 // app.use(express.static('public'));
 
 app.get('/db-test', async (req, res) => {
