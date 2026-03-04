@@ -4,20 +4,34 @@ import TodoInput from "./todo/TodoInput";
 import TodoList from "./todo/TodoList";
 import './App.css'
 
+const api = "http://localhost:3000/api"
+
 
 function App() {
-    const [tasks, setTasks] = useState(() => {
-        const lsData = localStorage.getItem("tasks")
-        if (lsData) {
-            console.log(JSON.parse(lsData))
-            return JSON.parse(lsData)
-        }
-        return []
-    })
+    // const [tasks, setTasks] = useState(() => {
+    //     const lsData = localStorage.getItem("tasks")
+    //     if (lsData) {
+    //         console.log(JSON.parse(lsData))
+    //         return JSON.parse(lsData)
+    //     }
+    //     return []
+    // })
 
+    const [tasks, setTasks] = useState([])
     useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks))
-    }, [tasks])
+        console.log("+++")
+         fetch(api + "/todos")
+             .then((response) => {
+             return response.json()
+         })
+             .then((data) => {
+                 console.log(data) //todo преобразовать и добавить в tasks
+             })
+    }, [])
+
+    // useEffect(() => {
+    //     localStorage.setItem("tasks", JSON.stringify(tasks))
+    // }, [tasks])
 
     const toggleTask = (id) => {
         const updatedTasks = []

@@ -29,9 +29,9 @@ router.post('/add', async (req, res) => {
 })
 
 router.put('/update', async (req, res) => {
-    const {id} = req.body;
+    const {id, isDone} = req.body;
     try {
-        const data = await pool.query('UPDATE todolist SET isDone = true WHERE id = ($1)', [id])
+        const data = await pool.query('UPDATE todolist SET isDone = ($2) WHERE id = $1', [String(id), isDone])
         res.json(data.rows)
     } catch (err) {
         res.status(500).send(err.message + 'Database error');
