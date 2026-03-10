@@ -10,7 +10,7 @@ router.get('/todos', async (req, res) => {
         const todos = data.rows.map(row => ({
             id: row.id,
             text: row.text,
-            isDone: Boolean(row.isDone)
+            isDone: Boolean(row.isdone)
         }))
         res.json(todos)
     } catch (err) {

@@ -20,13 +20,21 @@ function App() {
     const [tasks, setTasks] = useState([])
     useEffect(() => {
         console.log("+++")
-         fetch(api + "/todos")
-             .then((response) => {
-             return response.json()
-         })
-             .then((data) => {
-                 console.log(data) //todo преобразовать и добавить в tasks
-             })
+        fetch(api + "/todos")
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data) //todo преобразовать и добавить в tasks
+                for (const task of data) {
+                    const storageTask = {
+                        id: task.id,
+                        text: task.text,
+                        done: task.isDone
+                    }
+                    setTasks([...tasks, storageTask])
+                }
+            })
     }, [])
 
     // useEffect(() => {
@@ -55,11 +63,22 @@ function App() {
         setTasks([...tasks, newTask])
     }
 
+    const selectAllTasks = () => {
+        setTasks(tasks => tasks.map(el => ({...el, done: true}))
+        )
+    }
+
+    const deselectAllTasks = () => {
+        setTasks(tasks => tasks.map(el => ({...el, done: false}))
+        )
+    }
+
 
     return (
         <>
             <TodoContext.Provider value={{tasks, addTask, toggleTask}}>
                 <div>
+                    <button onClick={selectAllTasks}>Select all</button>
                     <h1 className="text-green-500">To Do List</h1>
                     <TodoInput/>
                     <TodoList/>
