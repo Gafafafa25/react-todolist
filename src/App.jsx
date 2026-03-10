@@ -26,16 +26,23 @@ function App() {
             })
             .then((data) => {
                 console.log(data) //todo преобразовать и добавить в tasks
+                const data2 = []
                 for (const task of data) {
                     const storageTask = {
                         id: task.id,
                         text: task.text,
                         done: task.isDone
                     }
-                    setTasks([...tasks, storageTask])
+                    data2.push(storageTask)
                 }
+                setTasks(data2)
             })
     }, [])
+
+
+    useEffect(() => {
+        fetch(api + "add")
+    }, []);
 
     // useEffect(() => {
     //     localStorage.setItem("tasks", JSON.stringify(tasks))
