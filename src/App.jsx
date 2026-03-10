@@ -40,24 +40,24 @@ function App() {
     }, [])
 
 
-    useEffect(() => {
-        fetch(api + "add")
-    }, []);
+
 
     // useEffect(() => {
     //     localStorage.setItem("tasks", JSON.stringify(tasks))
     // }, [tasks])
 
     const toggleTask = (id) => {
-        const updatedTasks = []
-        for (const task of tasks) {
-            if (task.id === id) {
-                updatedTasks.push({...task, done: !task.done})
-            } else {
-                updatedTasks.push(task)
-            }
-        }
+        const updatedTasks = tasks.map(task => task.id === id ? {...task, done: !task.done} : task)
         setTasks(updatedTasks)
+        console.log(tasks, " tasks")
+        console.log(updatedTasks.find(task => task.id === id))
+        fetch(api + "/update", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedTasks.find(task => task.id === id))
+        })
     }
 
     const addTask = (text) => {
@@ -68,6 +68,13 @@ function App() {
             done: false
         }
         setTasks([...tasks, newTask])
+        fetch(api + "/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newTask)
+        })
     }
 
     const selectAllTasks = () => {

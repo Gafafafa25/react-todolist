@@ -20,6 +20,7 @@ router.get('/todos', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     const {id, text} = req.body;
+    console.log(req.body)
     try {
         const data = await pool.query('INSERT INTO todolist (id, text) VALUES ($1, $2)', [String(id), text])
         res.json(data.rows)
@@ -29,9 +30,10 @@ router.post('/add', async (req, res) => {
 })
 
 router.put('/update', async (req, res) => {
-    const {id, isDone} = req.body;
+    const {id, done} = req.body;
+    console.log(req.body, " updated")
     try {
-        const data = await pool.query('UPDATE todolist SET isDone = ($2) WHERE id = $1', [String(id), isDone])
+        const data = await pool.query('UPDATE todolist SET isDone = ($2) WHERE id = $1', [String(id), done])
         res.json(data.rows)
     } catch (err) {
         res.status(500).send(err.message + 'Database error');
