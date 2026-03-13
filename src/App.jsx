@@ -25,7 +25,7 @@ function App() {
                 return response.json()
             })
             .then((data) => {
-                console.log(data) //todo преобразовать и добавить в tasks
+                console.log(data)
                 const data2 = []
                 for (const task of data) {
                     const storageTask = {
