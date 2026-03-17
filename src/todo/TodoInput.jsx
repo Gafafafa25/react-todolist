@@ -1,4 +1,4 @@
-import {useContext, useRef, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import TodoContext from "./TodoContext";
 
 const TodoInput = () => {
@@ -6,20 +6,30 @@ const TodoInput = () => {
     const {addTask} = useContext(TodoContext)
     const inputRef = useRef(null);
 
+    useEffect(() => {
+        inputRef.current.focus();
+    }, [])
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         addTask(value)
         setValue("")
         inputRef.current.focus()
     }
+
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="task" value={value}
+            <input  type="text" placeholder="task" value={value}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    id="input"
                    ref={inputRef}
                    onChange={(e) => {
                 setValue(e.target.value)
             }} required/>
-            <button type="submit">
+            <button type="submit"
+            className="w-full mt-2 mb-2 bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-300">
                 Add task
             </button>
         </form>

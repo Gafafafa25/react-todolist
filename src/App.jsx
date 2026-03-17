@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useMemo} from 'react'
 import TodoContext from "./todo/TodoContext";
 import TodoInput from "./todo/TodoInput";
 import TodoList from "./todo/TodoList";
@@ -17,6 +17,7 @@ function App() {
     //     return []
     // })
 
+    const [filter, setFilter] = useState("all")
     const [tasks, setTasks] = useState([])
     useEffect(() => {
         console.log("+++")
@@ -38,8 +39,6 @@ function App() {
                 setTasks(data2)
             })
     }, [])
-
-
 
 
     // useEffect(() => {
@@ -87,14 +86,35 @@ function App() {
         )
     }
 
+    const visibleTasks = useMemo(() => {
+        if (filter === "all") {
+            return tasks
+        }
+        if (filter === "done") {
+            return tasks.filter(task => task.done)
+        }
+        if (filter === "undone") {
+            return tasks.filter(task => !task.done)
+        }
+    }, [filter, tasks])
+
 
     return (
         <>
-            <TodoContext.Provider value={{tasks, addTask, toggleTask}}>
+            <TodoContext.Provider value={{tasks, addTask, toggleTask, filter, visibleTasks}}>
                 <div>
-                    <button onClick={selectAllTasks}>Select all</button>
-                    <h1 className="text-green-500">To Do List</h1>
+                    <h1 className="text-4xl font-semibold text-blue-600 mb-4">To Do List</h1>
                     <TodoInput/>
+                    <button onClick={selectAllTasks} className="float-right">Select all</button>
+                    <button onClick={() => setFilter("all")}
+                            disabled={filter === "all"}
+                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">All</button>
+                    <button onClick={() => setFilter("done")}
+                            disabled={filter === "done"}
+                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">Done</button>
+                    <button onClick={() => setFilter("undone")}
+                            disabled={filter === "undone"}
+                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">Undone</button>
                     <TodoList/>
                 </div>
             </TodoContext.Provider>
