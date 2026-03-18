@@ -1,4 +1,4 @@
-import {useEffect, useState, useMemo} from 'react'
+import {useEffect, useState, useMemo, useCallback} from 'react'
 import TodoContext from "./todo/TodoContext";
 import TodoInput from "./todo/TodoInput";
 import TodoList from "./todo/TodoList";
@@ -46,7 +46,7 @@ function App() {
     //     localStorage.setItem("tasks", JSON.stringify(tasks))
     // }, [tasks])
 
-    const toggleTask = (id) => {
+    const toggleTask = useCallback((id) => {
         const updatedTasks = tasks.map(task => task.id === id ? {...task, done: !task.done} : task)
         setTasks(updatedTasks)
         console.log(tasks, " tasks")
@@ -58,10 +58,9 @@ function App() {
             },
             body: JSON.stringify(updatedTasks.find(task => task.id === id))
         })
-    }
+    }, [])
 
-    const addTask = (text) => {
-        console.log(tasks, " before")
+    const addTask = useCallback((text) => {
         const newTask = {
             id: Date.now(),
             text: text,
@@ -75,14 +74,15 @@ function App() {
             },
             body: JSON.stringify(newTask)
         })
-    }
+    }, [])
 
-    const selectAllTasks = () => {
+    const selectAllTasks = useCallback(() => {
         setTasks(tasks => tasks.map(el => ({...el, done: true}))
         )
-    }
+    }, [])
 
     const visibleTasks = useMemo(() => {
+        console.log("!")
         if (filter === "all") {
             return tasks
         }
@@ -92,15 +92,20 @@ function App() {
         if (filter === "undone") {
             return tasks.filter(task => !task.done)
         }
-    }, [filter, tasks])
+    }, [filter, tasks, darkMode])
+
 
     const switchMode = () => {
         setDarkMode(!darkMode)
     }
 
+    const contextValue = useMemo(() => {
+        return {tasks, addTask, toggleTask, filter, visibleTasks}
+    }, [tasks, addTask, toggleTask, filter, visibleTasks])
+
     return (
         <>
-            <TodoContext.Provider value={{tasks, addTask, toggleTask, filter, visibleTasks}}>
+            <TodoContext.Provider value={contextValue}>
                 <div>
                     <h1 className={darkMode ? "text-5xl font-semibold text-white mb-4" : "text-5xl font-semibold text-blue-600 mb-4"}>To
                         Do List</h1>
@@ -112,7 +117,7 @@ function App() {
                     </button>
                     <button onClick={() => setFilter("done")}
                             disabled={filter === "done"}
-                            // className="mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded "
+                        // className="mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded "
                             className={filter === "done" ? "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded cursor-not-allowed opacity-60 transition-colors duration-200" :
                                 "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded"}
                     >Done

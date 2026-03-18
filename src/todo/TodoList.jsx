@@ -1,8 +1,8 @@
 import TodoContext from "./TodoContext";
-import {useContext, useState} from "react";
+import {useContext, useState, memo} from "react";
 
 
-const TodoList = () => {
+const TodoList = memo(() => {
     const {visibleTasks, toggleTask} = useContext(TodoContext)
 
     return (
@@ -19,5 +19,5 @@ const TodoList = () => {
             ))}
         </ul>
     )
-}
+})
 export default TodoList
