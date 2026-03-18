@@ -17,6 +17,7 @@ function App() {
     //     return []
     // })
 
+    const [darkMode, setDarkMode] = useState(false)
     const [filter, setFilter] = useState("all")
     const [tasks, setTasks] = useState([])
     useEffect(() => {
@@ -81,11 +82,6 @@ function App() {
         )
     }
 
-    const deselectAllTasks = () => {
-        setTasks(tasks => tasks.map(el => ({...el, done: false}))
-        )
-    }
-
     const visibleTasks = useMemo(() => {
         if (filter === "all") {
             return tasks
@@ -98,23 +94,45 @@ function App() {
         }
     }, [filter, tasks])
 
+    const switchMode = () => {
+        setDarkMode(!darkMode)
+    }
 
     return (
         <>
             <TodoContext.Provider value={{tasks, addTask, toggleTask, filter, visibleTasks}}>
                 <div>
-                    <h1 className="text-4xl font-semibold text-blue-600 mb-4">To Do List</h1>
+                    <h1 className={darkMode ? "text-5xl font-semibold text-white mb-4" : "text-5xl font-semibold text-blue-600 mb-4"}>To
+                        Do List</h1>
                     <TodoInput/>
-                    <button onClick={selectAllTasks} className="float-right">Select all</button>
                     <button onClick={() => setFilter("all")}
                             disabled={filter === "all"}
-                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">All</button>
+                            className={filter === "all" ? "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded cursor-not-allowed opacity-60 transition-colors duration-200" :
+                                "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded"}>All
+                    </button>
                     <button onClick={() => setFilter("done")}
                             disabled={filter === "done"}
-                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">Done</button>
+                            // className="mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded "
+                            className={filter === "done" ? "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded cursor-not-allowed opacity-60 transition-colors duration-200" :
+                                "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded"}
+                    >Done
+                    </button>
                     <button onClick={() => setFilter("undone")}
                             disabled={filter === "undone"}
-                        className="mt-2 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded ">Undone</button>
+                            className={filter === "undone" ? "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded cursor-not-allowed opacity-60 transition-colors duration-200" :
+                                "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded"}
+                    >Undone
+                    </button>
+                    {/*//todo: filter ??*/}
+                    <button onClick={selectAllTasks}
+                            className={filter === "done" ? "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded cursor-not-allowed opacity-60 transition-colors duration-200" :
+                                "mt-1 mr-2 mb-2 bg-green-600 text-white  py-2 px-4 rounded"}
+                    >All done
+                    </button>
+                    <button onClick={switchMode}
+                            className={darkMode ? "mt-1  mb-2 bg-gray-600 text-white py-2 px-4 rounded " : "mt-1 mb-2 bg-white text-gray-600   py-2 px-4 rounded "}
+                    >{darkMode ? "☀️" : "🌙"}
+                    </button>
                     <TodoList/>
                 </div>
             </TodoContext.Provider>
