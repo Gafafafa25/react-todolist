@@ -1,10 +1,12 @@
-import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef, useState, useId} from "react";
 import TodoContext from "./TodoContext";
+
 
 const TodoInput = () => {
     const [value, setValue] = useState("")
     const {addTask} = useContext(TodoContext)
     const inputRef = useRef(null);
+    const inputId = useId()
 
     useEffect(() => {
         inputRef.current.focus();
@@ -21,9 +23,10 @@ const TodoInput = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <label htmlFor={inputId}>Add task:</label>
             <input  type="text" placeholder="task" value={value}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    id="input"
+                    id={inputId}
                    ref={inputRef}
                    onChange={(e) => {
                 setValue(e.target.value)

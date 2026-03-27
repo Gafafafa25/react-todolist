@@ -79,6 +79,13 @@ function App() {
     const selectAllTasks = useCallback(() => {
         setTasks(tasks => tasks.map(el => ({...el, done: true}))
         )
+        fetch(api + "/updateAll", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
     }, [])
 
     const visibleTasks = useMemo(() => {

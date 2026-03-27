@@ -40,4 +40,15 @@ router.put('/update', async (req, res) => {
     }
 })
 
+router.put('/updateAll', async (req, res) => {
+    // const {id, done} = req.body;
+    console.log( "All updated")
+    try {
+        const data = await pool.query('UPDATE todolist SET isDone = true WHERE false')
+        res.json(data.rows)
+    } catch (err) {
+        res.status(500).send(err.message + 'Database error');
+    }
+})
+
 export default router;
