@@ -32,9 +32,9 @@ services:
         destination: /index.html
 
 databases:
-  name: react-todolist-db
-  databaseName: react_todolist
-  plan: free
-  ipAllowList: []
+  - name: react-todolist-db
+    databaseName: react_todolist
+    plan: free
+    ipAllowList: []
 
 
