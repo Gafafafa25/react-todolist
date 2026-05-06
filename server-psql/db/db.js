@@ -1,5 +1,4 @@
 import pkg from 'pg';
-import {connectionString} from "pg/lib/defaults.js";
 
 const {Pool} = pkg;
 const connection = process.env.DATABASE_URL ?
