@@ -51,7 +51,7 @@ function App() {
         setTasks(updatedTasks)
         console.log(tasks, " tasks")
         console.log(updatedTasks.find(task => task.id === id))
-        fetch(api + "/update", {
+        fetch(api + "/api/update", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -67,7 +67,7 @@ function App() {
             done: false
         }
         setTasks([...tasks, newTask])
-        fetch(api + "/add", {
+        fetch(api + "/api/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -79,7 +79,7 @@ function App() {
     const selectAllTasks = useCallback(() => {
         setTasks(tasks => tasks.map(el => ({...el, done: true}))
         )
-        fetch(api + "/updateAll", {
+        fetch(api + "/api/updateAll", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
