@@ -4,8 +4,8 @@ import TodoInput from "./todo/TodoInput";
 import TodoList from "./todo/TodoList";
 import './App.css'
 
-const api = "http://localhost:3000/api"
-
+// const api = "https://localhost:3000/api"
+const api = import.meta.env.VITE_API_URL
 
 function App() {
     // const [tasks, setTasks] = useState(() => {
