@@ -22,7 +22,7 @@ function App() {
     const [tasks, setTasks] = useState([])
     useEffect(() => {
         console.log("+++")
-        fetch(api + "/todos")
+        fetch(api + "/api/todos")
             .then((response) => {
                 return response.json()
             })
